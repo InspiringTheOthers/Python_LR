@@ -1,0 +1,69 @@
+1.
+li = [5,2,7,4,0,9,8,6] 
+n = 1 
+while n < len(li):
+     for i in range(len(li)-n):
+          if li[i] > li[i+1]:
+               li[i],li[i+1] = li[i+1],li[i]
+     n += 1
+print(li)
+
+2.
+s = [2,4,8,1,0,3,9,5,7,6]
+print (s) 
+k = 0
+while k < len(s) - 1: 
+    m = k 
+    i = k + 1
+    while i < len(s):
+        if s[i] < s[m]:
+            m = i
+        i += 1
+    t = s[k]
+    s[k] = s[m]
+    s[m] = t
+    k += 1  
+print(s)
+
+3.
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+   if first<last:
+       splitpoint = partition(alist,first,last)
+       quickSortHelper(alist,first,splitpoint-1)
+       quickSortHelper(alist,splitpoint+1,last)
+        
+def partition(alist,first,last):
+   pivotvalue = alist[first]
+
+   leftmark = first+1
+   rightmark = last
+   done = False
+   while not done:
+
+       while leftmark <= rightmark and alist[leftmark] <= pivotvalue:
+           leftmark = leftmark + 1
+
+       while alist[rightmark] >= pivotvalue and rightmark >= leftmark:
+           rightmark = rightmark -1
+
+       if rightmark < leftmark:
+           done = True
+       else:
+           temp = alist[leftmark]
+           alist[leftmark] = alist[rightmark]
+           alist[rightmark] = temp
+   temp = alist[first]
+   alist[first] = alist[rightmark]
+   alist[rightmark] = temp
+   return rightmark
+
+alist = [54,20,41,19,15,0,6]
+quickSort(alist)
+print(alist)
+
+
+
+

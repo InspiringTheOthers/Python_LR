@@ -1,0 +1,151 @@
+1. 
+class DLinkedList():
+    # Конструктор класса
+    def __init__(self):
+        self.first = None
+        self.last = None
+        self.length = 0
+    
+    # Имплементация метода str()
+    def __str__(self):
+        output = 'DoublyLinkedList ['
+        if self.first != None:
+            current_node = self.first
+            output += '\n ' + str(current_node)
+            
+            while current_node.next != None:
+                current_node = current_node.next
+                output += '\n ' + str(current_node)
+        return output + ']'
+    
+    # Имплементация метода len()
+    def __len__(self):
+        return self.length
+    
+    # Добавление нового элемента в конец списка
+    def add(self, element):
+        self.length += 1
+        if self.first == None:
+            self.first = self.last = Node(element)
+        else:
+            self.last.next = self.last = Node(element, self.last)
+            
+    # Добавление нового элемента в начало списка
+    def push(self, element):
+        self.length += 1
+        if self.first == None:
+            self.first = self.last = Node(element)
+        else:
+            self.last.next = self.last = Node(element, self.last)
+    
+    # Удаление элемента с конца списка 
+    def remove(self):
+        if self.first == None:
+            print('No objects here')
+        else:
+            self.length -= 1
+            self.last = self.last.previous
+            self.last.next = None
+            
+    # Удаление элемента с начала списка 
+    def pop(self):
+        if self.first == None:
+            print('No objects here')
+        else: 
+            self.length -= 1
+            self.first = self.first.next
+            self.first.previous = None
+            
+    # Добавление нового элемента по индексу (add(index)) 
+    def add_index(self, index, element):
+        if index >= self.length or index < 0:
+            print("Wrong index")
+        else:
+            self.length += 1
+            new = self.first
+            i = 1
+            while i <= index:
+                new = new.next
+                if i + 1 == index:
+                    newnext = new
+                    newprevious = new.previous
+                    new = Node(element, newprevious, newnext)
+                    new.next.previous = new
+                    new.previous.next = new
+                    print("Added")
+                    break
+                i += 1
+    
+    # Удаление элемента по индексу (remove(index)) 
+    def remove_index(self, index):
+        if index >= self.length or index < 0:
+            print("Wrong index")
+        else:
+            self.length -= 1
+            if index == 1:
+                self.first = self.first.next
+                self.first.previous = None
+            else: 
+                removing = self.first
+                i = 1
+                while i <= index:
+                    removing = removing.next
+                    if i + 1 == index:
+                        removing.previous.next = removing.next
+                        removing.next.previous = removing.previous
+                        print("Deleted")
+                        break
+                    i += 1
+    
+    # Проверка существования элемента в списке (contains(element_value))
+    def contains(self, element):
+        if self.first == None:
+            print("Empty list")
+        else:
+            current = self.first
+            for i in range(self.length):
+                if current.value == element: 
+                    print("In list")
+                    return
+                elif current.next == None:
+                    print("Not in list")
+                    return
+                else:
+                    current = current.next
+
+2.
+class Node:
+    __FORMAT = '[Value = {0}, Previous = {1}, Next = {2}]'
+    
+    # Конструктор класса
+    def __init__(self, value = None, previous = None, next = None):
+        self.value = value
+        self.previous = previous
+        self.next = next
+    
+    # Имплементация метода str()
+    def __str__(self):        
+        def link_value(link):
+            value = None
+            if link:
+                value = link.value
+            return value
+        
+        previous = link_value(self.previous)
+        next = link_value(self.next)
+        
+        return self.__FORMAT.format(self.value, previous, next)
+In [14]:
+test_list = DLinkedList()
+test_list.add(1)
+test_list.add(13)
+test_list.add(-5)
+test_list.push(3)
+test_list.push(4)
+test_list.pop()
+print("Тестовый список:\n %s" % (test_list))
+print("List length = %i" % (len(test_list)))
+test_list.remove_index(4)
+print("List length = %i" % (len(test_list)))
+
+
