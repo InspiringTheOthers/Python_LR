@@ -1,0 +1,36 @@
+import numpy as np
+import matplotlib.pyplot as plt
+width = 100
+height = 75
+step = 25
+K = 11
+objectsInRow = width / step * 2
+objectsInColumn = height / step * 2
+colCount = width / step + 1
+rowCount = height / step + 1
+maxVertObjects = ((height / step) * colCount)*2 + 1
+maxHorObjects = ((width / step) * rowCount)*2
+
+plt.rcParams["figure.figsize"] = [colCount,rowCount]
+plt.gca().invert_yaxis()
+
+for i in range(1, int(maxHorObjects), 2):
+    rowNum = i // objectsInRow
+    colNum = ((i - rowNum*objectsInRow) + 1) // 2 - 1
+    xStart = colNum * step
+    yStart = rowNum * step
+    plt.plot([xStart, (xStart+step)],[yStart, yStart], 'r')
+    plt.text(xStart+step/2, yStart, i)
+
+for i in range(2, int(maxVertObjects), 2):
+    rowNum = (i - 1) // (objectsInRow + 2)
+    colNum = ((i - rowNum*(objectsInRow + 2)) - 2) // 2
+    xStart = colNum * step
+    yStart = rowNum * step
+    plt.plot([xStart, (xStart)],[yStart, yStart + step], 'r')
+    plt.text(xStart, yStart+step/2, i)
+    if i == k:
+        plt.plot([xStart, (xStart)],[yStart, yStart + step], 'b')
+
+
+plt.show()
